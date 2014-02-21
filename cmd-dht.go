@@ -53,7 +53,7 @@ func cmdDhtGetPeers(args []string) {
 		return
 	}
 
-	infoHash, err := torrent.BTIDFromHex(args[0])
+	infoHash, err := bittorrent.BTIDFromHex(args[0])
 
 	if err != nil {
 		logger.Fatalf("Specified string was not a valid hex infohash [%v].\n", err)

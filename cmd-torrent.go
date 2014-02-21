@@ -4,7 +4,6 @@ import (
 	"crypto/sha1"
 	"github.com/jbitor/bencoding"
 	"github.com/jbitor/bittorrent"
-	"github.com/jbitor/jbitor/utils"
 	"os"
 )
 
@@ -34,7 +33,7 @@ func cmdTorrentMake(args []string) {
 
 	path := args[0]
 
-	infoDict, err := utils.GenerateTorrentMetaInfo(utils.CreationOptions{
+	infoDict, err := bittorrent.GenerateTorrentMetaInfo(bittorrent.CreationOptions{
 		Path:           path,
 		PieceLength:    32768,
 		ForceMultiFile: false,
@@ -70,7 +69,7 @@ func cmdTorrentMake(args []string) {
 	hasher := sha1.New()
 	hasher.Write(infoData)
 	hash := hasher.Sum(nil)
-	infoHash := torrent.BTID(hash)
+	infoHash := bittorrent.BTID(hash)
 
 	logger.Printf("Generated torrent btih=%v.\n", infoHash)
 

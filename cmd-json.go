@@ -30,7 +30,7 @@ func cmdJson(args []string) {
 
 func cmdJsonFromBencoding(args []string) {
 	if len(args) != 0 {
-		logger.Fatalf("Usage: %v json from-bencoding < FOO.torrent > FOO.torrent.json\n", os.Args[0])
+		logger.Fatalf("Usage: %v json from-bencoding < FOO.torrent > FOO.bittorrent.json\n", os.Args[0])
 		return
 	}
 
@@ -63,7 +63,7 @@ func cmdJsonFromBencoding(args []string) {
 
 func cmdJsonToBencoding(args []string) {
 	if len(args) != 0 {
-		logger.Fatalf("Usage: %v json to-bencoding < FOO.torrent.json > FOO.torrent\n", os.Args[0])
+		logger.Fatalf("Usage: %v json to-bencoding < FOO.bittorrent.json > FOO.torrent\n", os.Args[0])
 		return
 	}
 
