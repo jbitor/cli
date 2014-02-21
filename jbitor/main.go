@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/jbitor/jbitor/cli"
+	"github.com/jbitor/cli"
 )
 
 func main() {
