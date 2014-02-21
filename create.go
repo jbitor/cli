@@ -7,31 +7,13 @@ import (
 	"os"
 )
 
-func cmdTorrent(args []string) {
-	if len(args) == 0 {
-		logger.Fatalf("Usage: %v torrent SUBCOMMAND\n", os.Args[0])
+func JbitorCreateMain() {
+	if len(os.Args) != 2 {
+		logger.Fatalf("Usage: %v PATH\n", os.Args[0])
 		return
 	}
 
-	subcommand := args[0]
-	subcommandArgs := args[1:]
-
-	switch subcommand {
-	case "make":
-		cmdTorrentMake(subcommandArgs)
-	default:
-		logger.Fatalf("Unknown torrent subcommand: %v\n", subcommand)
-		return
-	}
-}
-
-func cmdTorrentMake(args []string) {
-	if len(args) != 1 {
-		logger.Fatalf("Usage: %v torrent make PATH\n", os.Args[0])
-		return
-	}
-
-	path := args[0]
+	path := os.Args[1]
 
 	infoDict, err := bittorrent.GenerateTorrentMetaInfo(bittorrent.CreationOptions{
 		Path:           path,

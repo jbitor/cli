@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func Main() {
+func JbitorMain() {
 	if len(os.Args) == 1 {
 		logger.Fatalf("Usage: %v COMMAND\n", os.Args[0])
 		return
@@ -19,8 +19,6 @@ func Main() {
 	weakrand.Seed(time.Now().UTC().UnixNano())
 
 	switch command {
-	case "torrent":
-		cmdTorrent(commandArgs)
 	case "dht":
 		cmdDht(commandArgs)
 	case "json":

@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	cli.JbitorMain()
+	cli.JbitorCreateMain()
 }
