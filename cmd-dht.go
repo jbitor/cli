@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/jbitor/bittorrent"
 	"github.com/jbitor/dht"
+	"github.com/jbitor/webclient"
 	"os"
 	"time"
 )
@@ -40,11 +41,16 @@ func cmdDhtConnect(args []string) {
 		return
 	}
 
+	err = webclient.ServeForDhtClient(client)
+	if err != nil {
+		logger.Fatalf("Unable to serve web client: %v\n", err)
+		return
+	}
+	defer client.Close()
+
 	for {
 		time.Sleep(60 * time.Second)
 	}
-
-	client.Close()
 }
 
 func cmdDhtGetPeers(args []string) {
