@@ -39,8 +39,8 @@ func main() {
 
 	defer dhtClient.Close()
 
-	peers, err := dhtClient.GetPeers(infoHash)
-
+	search := dhtClient.GetPeers(infoHash)
+	peers, err := search.AllPeers()
 	if err != nil {
 		logger.Fatalf("Unable to find peers: %v\n", err)
 	}
