@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/jbitor/bittorrent"
 	"github.com/jbitor/dht"
-	"github.com/jbitor/webclient"
-	"os"
 	"log"
+	weakrand "math/rand"
+	"os"
 	"time"
 )
 
@@ -22,7 +22,9 @@ func main() {
 		return
 	}
 
-	infoHash, err := bittorrent.BTIDFromHex(args[0])
+	weakrand.Seed(time.Now().UTC().UnixNano())
+
+	infoHash, err := bittorrent.BTIDFromHex(os.Args[1])
 
 	if err != nil {
 		logger.Fatalf("Specified string was not a valid hex infohash [%v].\n", err)

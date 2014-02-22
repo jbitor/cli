@@ -5,7 +5,9 @@ import (
 	"github.com/jbitor/bencoding"
 	"io/ioutil"
 	"log"
+	weakrand "math/rand"
 	"os"
+	"time"
 )
 
 var logger *log.Logger
@@ -19,6 +21,8 @@ func main() {
 		logger.Fatalf("Usage: %v from-bencoding|to-bencoding\n", os.Args[0])
 		return
 	}
+
+	weakrand.Seed(time.Now().UTC().UnixNano())
 
 	subcommand := os.Args[1]
 	subcommandArgs := os.Args[2:]
