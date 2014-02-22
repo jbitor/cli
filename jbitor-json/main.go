@@ -1,20 +1,27 @@
-package cli
+package main
 
 import (
 	"encoding/json"
 	"github.com/jbitor/bencoding"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
-func cmdJson(args []string) {
-	if len(args) == 0 {
-		logger.Fatalf("Usage: %v json SUBCOMMAND\n", os.Args[0])
+var logger *log.Logger
+
+func init() {
+	logger = log.New(os.Stderr, "", 0)
+}
+
+func main() {
+	if len(os.Args) == 1 {
+		logger.Fatalf("Usage: %v from-bencoding|to-bencoding\n", os.Args[0])
 		return
 	}
 
-	subcommand := args[0]
-	subcommandArgs := args[1:]
+	subcommand := os.Args[1]
+	subcommandArgs := os.Args[2:]
 
 	switch subcommand {
 	case "from-bencoding":
@@ -30,7 +37,7 @@ func cmdJson(args []string) {
 
 func cmdJsonFromBencoding(args []string) {
 	if len(args) != 0 {
-		logger.Fatalf("Usage: %v json from-bencoding < FOO.torrent > FOO.bittorrent.json\n", os.Args[0])
+		logger.Fatalf("Usage: %v from-bencoding < FOO.torrent > FOO.bittorrent.json\n", os.Args[0])
 		return
 	}
 
@@ -63,7 +70,7 @@ func cmdJsonFromBencoding(args []string) {
 
 func cmdJsonToBencoding(args []string) {
 	if len(args) != 0 {
-		logger.Fatalf("Usage: %v json to-bencoding < FOO.bittorrent.json > FOO.torrent\n", os.Args[0])
+		logger.Fatalf("Usage: %v to-bencoding < FOO.bittorrent.json > FOO.torrent\n", os.Args[0])
 		return
 	}
 
