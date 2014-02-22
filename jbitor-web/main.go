@@ -23,18 +23,25 @@ func main() {
 
 	weakrand.Seed(time.Now().UTC().UnixNano())
 
-	client, err := dht.OpenClient(".dht-peer", false)
+	dc, err := dht.OpenClient(".dht-peer", false)
 	if err != nil {
-		logger.Fatalf("Unable to open client: %v\n", err)
+		logger.Fatalf("Unable to open DHT client: %v\n", err)
 		return
 	}
 
-	err = webclient.ServeForDhtClient(client)
+	wc, err := webclient.NewForDhtClient(dc)
+	if err != nil {
+		logger.Fatalf("Unable to create web client: %v\n", err)
+		return
+	}
+
+	err = wc.ListenAndServe()
 	if err != nil {
 		logger.Fatalf("Unable to serve web client: %v\n", err)
 		return
 	}
-	defer client.Close()
+
+	defer dc.Close()
 
 	for {
 		time.Sleep(60 * time.Second)
