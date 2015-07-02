@@ -2,12 +2,13 @@ package main
 
 import (
 	"crypto/sha1"
-	"github.com/jbitor/bencoding"
-	"github.com/jbitor/bittorrent"
 	"log"
 	weakrand "math/rand"
 	"os"
 	"time"
+
+	"github.com/jbitor/bencoding"
+	"github.com/jbitor/bittorrent"
 )
 
 var logger *log.Logger

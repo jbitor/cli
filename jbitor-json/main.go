@@ -2,12 +2,13 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/jbitor/bencoding"
 	"io/ioutil"
 	"log"
 	weakrand "math/rand"
 	"os"
 	"time"
+
+	"github.com/jbitor/bencoding"
 )
 
 var logger *log.Logger
