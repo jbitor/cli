@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/jbitor/dht"
-	"github.com/jbitor/webclient"
 	"log"
 	weakrand "math/rand"
 	"os"
 	"time"
+
+	"github.com/jbitor/dht"
+	"github.com/jbitor/webclient"
 )
 
 var logger *log.Logger

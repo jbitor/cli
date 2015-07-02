@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/jbitor/bittorrent"
-	"github.com/jbitor/dht"
 	"log"
 	weakrand "math/rand"
 	"os"
 	"time"
+
+	"github.com/jbitor/bittorrent"
+	"github.com/jbitor/dht"
 )
 
 var logger *log.Logger
