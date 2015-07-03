@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"log"
 	weakrand "math/rand"
 	"os"
@@ -47,7 +47,10 @@ func main() {
 	}
 
 	logger.Printf("Found peers for %v:\n", infoHash)
-	for _, peer := range peers {
-		fmt.Println(peer)
+	peerData, err := json.Marshal(peers)
+	if err != nil {
+		logger.Fatalf("?!?: %v\n", err)
 	}
+
+	os.Stdout.Write(peerData)
 }
