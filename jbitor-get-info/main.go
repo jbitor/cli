@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/jbitor/bencoding"
 	"github.com/jbitor/bittorrent"
 	"github.com/op/go-logging"
 )
@@ -49,7 +50,18 @@ func main() {
 		swarm.AddPeer(peer)
 	}
 
+	logger.Info("getting info")
 	info := swarm.Info()
-
 	logger.Info("got info: %v", info)
+
+	torrentFileData, err := bencoding.Encode(bencoding.Dict{
+		"info":          info,
+		"announce-list": bencoding.List{},
+		"nodes":         bencoding.List{},
+	})
+	if err != nil {
+		logger.Fatalf("error encoding torrent file: %v:", err)
+	}
+
+	os.Stdout.Write(torrentFileData)
 }
