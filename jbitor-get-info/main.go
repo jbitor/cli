@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"log"
 	weakrand "math/rand"
+	"net"
 	"os"
 	"time"
 
@@ -33,18 +34,19 @@ func main() {
 		return
 	}
 
-	peers := make([]*bittorrent.RemotePeer, 0)
+	peers := make([]net.TCPAddr, 0)
 	dec := json.NewDecoder(os.Stdin)
 	dec.Decode(&peers)
 	logger.Printf("Loaded peers: %v\n", peers)
 
-	swarm := bittorrent.OpenSwarm(infoHash)
+	client := bittorrent.OpenClient()
+	swarm := client.Swarm(infoHash)
 
 	for _, peer := range peers {
 		swarm.AddPeer(peer)
 	}
 
-	info := swarm.GetInfo()
+	info := swarm.Info()
 
 	logger.Printf("got info: %v", info)
 }
