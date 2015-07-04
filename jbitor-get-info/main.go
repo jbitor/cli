@@ -18,7 +18,7 @@ var logger = logging.MustGetLogger("main")
 func init() {
 	logging.SetBackend(logging.NewBackendFormatter(
 		logging.NewLogBackend(os.Stderr, "", 0), logging.MustStringFormatter(
-			"%{color}%{level:4.4s} %{id:03x}%{color:reset} %{message}\n         %{longfunc}() in %{module}/%{shortfile}\n\n",
+			"%{color}%{level:4.4s}%{color:reset} %{message}\n%{color}%{id:4.4x}%{color:reset} %{module} / %{shortfile} / %{longfunc}()\n\n",
 		)))
 }
 
