@@ -4,19 +4,22 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	weakrand "math/rand"
 	"net"
 	"os"
 	"time"
 
 	"github.com/jbitor/bittorrent"
+	"github.com/op/go-logging"
 )
 
-var logger *log.Logger
+var logger = logging.MustGetLogger("main")
 
 func init() {
-	logger = log.New(os.Stderr, "", 0)
+	logging.SetBackend(logging.NewBackendFormatter(
+		logging.NewLogBackend(os.Stderr, "", 0), logging.MustStringFormatter(
+			"%{color}%{level:4.4s} %{id:03x}%{color:reset} %{message}\n         %{longfunc}() in %{module}/%{shortfile}\n\n",
+		)))
 }
 
 func main() {
@@ -37,7 +40,7 @@ func main() {
 	peers := make([]net.TCPAddr, 0)
 	dec := json.NewDecoder(os.Stdin)
 	dec.Decode(&peers)
-	logger.Printf("Loaded peers: %v\n", peers)
+	logger.Info("Loaded peers: %v\n", peers)
 
 	client := bittorrent.OpenClient()
 	swarm := client.Swarm(infoHash)
@@ -48,5 +51,5 @@ func main() {
 
 	info := swarm.Info()
 
-	logger.Printf("got info: %v", info)
+	logger.Info("got info: %v", info)
 }

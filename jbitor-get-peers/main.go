@@ -2,19 +2,24 @@ package main
 
 import (
 	"encoding/json"
-	"log"
+
 	weakrand "math/rand"
 	"os"
 	"time"
+
+	"github.com/op/go-logging"
 
 	"github.com/jbitor/bittorrent"
 	"github.com/jbitor/dht"
 )
 
-var logger *log.Logger
+var logger = logging.MustGetLogger("main")
 
 func init() {
-	logger = log.New(os.Stderr, "", 0)
+	logging.SetBackend(logging.NewBackendFormatter(
+		logging.NewLogBackend(os.Stderr, "", 0), logging.MustStringFormatter(
+			"%{color}%{level:4.4s} %{id:03x}%{color:reset} %{message}\n         %{longfunc}() in %{module}/%{shortfile}\n\n",
+		)))
 }
 
 func main() {
@@ -46,7 +51,7 @@ func main() {
 		logger.Fatalf("Unable to find peers: %v\n", err)
 	}
 
-	logger.Printf("Found peers for %v:\n", infoHash)
+	logger.Info("Found peers for %v:\n", infoHash)
 	peerData, err := json.Marshal(peers)
 	if err != nil {
 		logger.Fatalf("?!?: %v\n", err)

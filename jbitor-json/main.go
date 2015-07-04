@@ -3,18 +3,22 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	weakrand "math/rand"
 	"os"
 	"time"
 
 	"github.com/jbitor/bencoding"
+
+	"github.com/op/go-logging"
 )
 
-var logger *log.Logger
+var logger = logging.MustGetLogger("main")
 
 func init() {
-	logger = log.New(os.Stderr, "", 0)
+	logging.SetBackend(logging.NewBackendFormatter(
+		logging.NewLogBackend(os.Stderr, "", 0), logging.MustStringFormatter(
+			"%{color}%{level:4.4s} %{id:03x}%{color:reset} %{message}\n         %{longfunc}() in %{module}/%{shortfile}\n\n",
+		)))
 }
 
 func main() {

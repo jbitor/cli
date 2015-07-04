@@ -2,19 +2,22 @@ package main
 
 import (
 	"crypto/sha1"
-	"log"
 	weakrand "math/rand"
 	"os"
 	"time"
 
 	"github.com/jbitor/bencoding"
 	"github.com/jbitor/bittorrent"
+	"github.com/op/go-logging"
 )
 
-var logger *log.Logger
+var logger = logging.MustGetLogger("main")
 
 func init() {
-	logger = log.New(os.Stderr, "", 0)
+	logging.SetBackend(logging.NewBackendFormatter(
+		logging.NewLogBackend(os.Stderr, "", 0), logging.MustStringFormatter(
+			"%{color}%{level:4.4s} %{id:03x}%{color:reset} %{message}\n         %{longfunc}() in %{module}/%{shortfile}\n\n",
+		)))
 }
 
 const PieceLength = 32768
@@ -67,7 +70,7 @@ func main() {
 	hash := hasher.Sum(nil)
 	infoHash := bittorrent.BTID(hash)
 
-	logger.Printf("Generated torrent btih=%v.\n", infoHash)
+	logger.Info("Generated torrent btih=%v.\n", infoHash)
 
 	os.Stdout.Write(torrentData)
 	os.Stdout.Sync()
