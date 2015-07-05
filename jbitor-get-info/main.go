@@ -21,7 +21,7 @@ func main() {
 	loggerconfig.Use()
 
 	if len(os.Args) != 2 {
-		logger.Fatalf("Usage: %v INFOHASH < INFOHASH.peers\n", os.Args[0])
+		logger.Fatalf("Usage: %v INFOHASH < INFOHASH.peers", os.Args[0])
 		return
 	}
 
@@ -30,7 +30,7 @@ func main() {
 	infoHash, err := bittorrent.BTIDFromHex(os.Args[1])
 
 	if err != nil {
-		logger.Fatalf("Specified string was not a valid hex infohash [%v].\n", err)
+		logger.Fatalf("Specified string was not a valid hex infohash [%v].", err)
 		return
 	}
 

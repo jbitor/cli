@@ -18,7 +18,7 @@ var logger = logging.MustGetLogger("main")
 func init() {
 	logging.SetBackend(logging.NewBackendFormatter(
 		logging.NewLogBackend(os.Stderr, "", 0), logging.MustStringFormatter(
-			"%{color}%{level:4.4s}%{color:reset} %{message}\n%{color}%{id:4.4x}%{color:reset} %{module} / %{shortfile} / %{longfunc}()\n\n",
+			"%{color}%{level:4.4s}%{color:reset} %{message}\n%{color}%{id:4.4x}%{color:reset} %{module} / %{shortfile} / %{longfunc}()\n",
 		)))
 }
 
@@ -26,7 +26,7 @@ func main() {
 	loggerconfig.Use()
 
 	if len(os.Args) == 1 {
-		logger.Fatalf("Usage: %v from-bencoding|to-bencoding\n", os.Args[0])
+		logger.Fatalf("Usage: %v from-bencoding|to-bencoding", os.Args[0])
 		return
 	}
 
@@ -41,7 +41,7 @@ func main() {
 	case "to-bencoding":
 		cmdJsonToBencoding(subcommandArgs)
 	default:
-		logger.Fatalf("Unknown torrent subcommand: %v\n", subcommand)
+		logger.Fatalf("Unknown torrent subcommand: %v", subcommand)
 		return
 	}
 
@@ -49,30 +49,30 @@ func main() {
 
 func cmdJsonFromBencoding(args []string) {
 	if len(args) != 0 {
-		logger.Fatalf("Usage: %v from-bencoding < FOO.torrent > FOO.bittorrent.json\n", os.Args[0])
+		logger.Fatalf("Usage: %v from-bencoding < FOO.torrent > FOO.bittorrent.json", os.Args[0])
 		return
 	}
 
 	data, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
-		logger.Fatalf("Error reading stdin: %v\n", err)
+		logger.Fatalf("Error reading stdin: %v", err)
 		return
 	}
 
 	decoded, err := bencoding.Decode(data)
 	if err != nil {
-		logger.Fatalf("Error bdecoding stdin: %v\n", err)
+		logger.Fatalf("Error bdecoding stdin: %v", err)
 		return
 	}
 
 	jsonable, err := decoded.ToJsonable()
 	if err != nil {
-		logger.Fatalf("Error converting bencoded value to jsonable: %v\n", err)
+		logger.Fatalf("Error converting bencoded value to jsonable: %v", err)
 	}
 
 	jsoned, err := json.Marshal(jsonable)
 	if err != nil {
-		logger.Fatalf("Error json-encoding data: %v\n", err)
+		logger.Fatalf("Error json-encoding data: %v", err)
 		return
 	}
 
@@ -82,32 +82,32 @@ func cmdJsonFromBencoding(args []string) {
 
 func cmdJsonToBencoding(args []string) {
 	if len(args) != 0 {
-		logger.Fatalf("Usage: %v to-bencoding < FOO.bittorrent.json > FOO.torrent\n", os.Args[0])
+		logger.Fatalf("Usage: %v to-bencoding < FOO.bittorrent.json > FOO.torrent", os.Args[0])
 		return
 	}
 
 	data, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
-		logger.Fatalf("Error reading stdin: %v\n", err)
+		logger.Fatalf("Error reading stdin: %v", err)
 		return
 	}
 
 	var decoded *interface{}
 	err = json.Unmarshal(data, &decoded)
 	if err != nil {
-		logger.Fatalf("Error decoding JSON from stdin: %v\n", err)
+		logger.Fatalf("Error decoding JSON from stdin: %v", err)
 		return
 	}
 
 	bval, err := bencoding.FromJsonable(*decoded)
 	if err != nil {
-		logger.Fatalf("Error converting jsonable to bencodable: %v\n", err)
+		logger.Fatalf("Error converting jsonable to bencodable: %v", err)
 		return
 	}
 
 	encoded, err := bencoding.Encode(bval)
 	if err != nil {
-		logger.Fatalf("Error bencoding value: %v\n", err)
+		logger.Fatalf("Error bencoding value: %v", err)
 		return
 	}
 

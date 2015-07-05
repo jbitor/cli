@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/jbitor/bittorrent"
 	"github.com/jbitor/cli/loggerconfig"
 	"github.com/jbitor/dht"
 	"github.com/jbitor/webclient"
@@ -17,7 +18,7 @@ func main() {
 	loggerconfig.Use()
 
 	if len(os.Args) == 0 {
-		logger.Fatalf("Usage: %v\n", os.Args[0])
+		logger.Fatalf("Usage: %v", os.Args[0])
 		return
 	}
 
@@ -25,19 +26,21 @@ func main() {
 
 	dc, err := dht.OpenClient(".dht-peer", false)
 	if err != nil {
-		logger.Fatalf("Unable to open DHT client: %v\n", err)
+		logger.Fatalf("Unable to open DHT client: %v", err)
 		return
 	}
 
-	wc, err := webclient.NewForDhtClient(dc)
+	bc := bittorrent.OpenClient()
+
+	wc, err := webclient.New(dc, bc)
 	if err != nil {
-		logger.Fatalf("Unable to create web client: %v\n", err)
+		logger.Fatalf("Unable to create web interface: %v", err)
 		return
 	}
 
 	err = wc.ListenAndServe()
 	if err != nil {
-		logger.Fatalf("Unable to serve web client: %v\n", err)
+		logger.Fatalf("Unable to serve web interface: %v", err)
 		return
 	}
 

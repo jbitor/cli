@@ -20,7 +20,7 @@ func main() {
 	loggerconfig.Use()
 
 	if len(os.Args) != 2 {
-		logger.Fatalf("Usage: %v PATH\n", os.Args[0])
+		logger.Fatalf("Usage: %v PATH", os.Args[0])
 		return
 	}
 
@@ -34,13 +34,13 @@ func main() {
 		ForceMultiFile: false,
 	})
 	if err != nil {
-		logger.Fatalf("Error generating torrent: %v\n", err)
+		logger.Fatalf("Error generating torrent: %v", err)
 		return
 	}
 
 	infoData, err := bencoding.Encode(infoDict)
 	if err != nil {
-		logger.Fatalf("Error encoding torrent infodict (for hashing): %v\n", err)
+		logger.Fatalf("Error encoding torrent infodict (for hashing): %v", err)
 		return
 	}
 
@@ -57,7 +57,7 @@ func main() {
 	torrentData, err := bencoding.Encode(torrentDict)
 
 	if err != nil {
-		logger.Fatalf("Error encoding torrent data: %v\n", err)
+		logger.Fatalf("Error encoding torrent data: %v", err)
 		return
 	}
 
@@ -66,7 +66,7 @@ func main() {
 	hash := hasher.Sum(nil)
 	infoHash := bittorrent.BTID(hash)
 
-	logger.Info("Generated torrent btih=%v.\n", infoHash)
+	logger.Info("Generated torrent btih=%v.", infoHash)
 
 	os.Stdout.Write(torrentData)
 	os.Stdout.Sync()
