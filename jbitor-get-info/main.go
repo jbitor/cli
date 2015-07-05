@@ -37,7 +37,7 @@ func main() {
 	peers := make([]net.TCPAddr, 0)
 	dec := json.NewDecoder(os.Stdin)
 	dec.Decode(&peers)
-	logger.Info("Loaded peers: %v\n", peers)
+	logger.Info("Loaded peers: %v", peers)
 
 	client := bittorrent.OpenClient()
 	swarm := client.Swarm(infoHash)
