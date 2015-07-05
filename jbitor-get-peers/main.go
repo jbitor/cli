@@ -10,19 +10,15 @@ import (
 	"github.com/op/go-logging"
 
 	"github.com/jbitor/bittorrent"
+	"github.com/jbitor/cli/loggerconfig"
 	"github.com/jbitor/dht"
 )
 
 var logger = logging.MustGetLogger("main")
 
-func init() {
-	logging.SetBackend(logging.NewBackendFormatter(
-		logging.NewLogBackend(os.Stderr, "", 0), logging.MustStringFormatter(
-			"%{color}%{level:4.4s} %{id:03x}%{color:reset} %{message}\n         %{longfunc}() in %{module}/%{shortfile}\n\n",
-		)))
-}
-
 func main() {
+	loggerconfig.Use()
+
 	if len(os.Args) != 2 {
 		logger.Fatalf("Usage: %v INFOHASH\n", os.Args[0])
 		return

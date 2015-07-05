@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/jbitor/cli/loggerconfig"
 	"github.com/jbitor/dht"
 	"github.com/jbitor/webclient"
 	"github.com/op/go-logging"
@@ -12,14 +13,9 @@ import (
 
 var logger = logging.MustGetLogger("main")
 
-func init() {
-	logging.SetBackend(logging.NewBackendFormatter(
-		logging.NewLogBackend(os.Stderr, "", 0), logging.MustStringFormatter(
-			"%{color}%{level:4.4s} %{id:03x}%{color:reset} %{message}\n         %{longfunc}() in %{module}/%{shortfile}\n\n",
-		)))
-}
-
 func main() {
+	loggerconfig.Use()
+
 	if len(os.Args) == 0 {
 		logger.Fatalf("Usage: %v\n", os.Args[0])
 		return
