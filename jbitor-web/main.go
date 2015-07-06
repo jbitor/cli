@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/jbitor/bittorrent"
+	"github.com/jbitor/bittorrent/dht"
 	"github.com/jbitor/cli/loggerconfig"
-	"github.com/jbitor/dht"
 	"github.com/jbitor/webclient"
 	"github.com/op/go-logging"
 )

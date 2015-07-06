@@ -10,8 +10,8 @@ import (
 	"github.com/op/go-logging"
 
 	"github.com/jbitor/bittorrent"
+	"github.com/jbitor/bittorrent/dht"
 	"github.com/jbitor/cli/loggerconfig"
-	"github.com/jbitor/dht"
 )
 
 var logger = logging.MustGetLogger("main")
